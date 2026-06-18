@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SparkleWash — Premium Car Cleaning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a; --dark: #111111; --panel: #1a1a1a; --border: #2a2a2a;
+      --blue: #2563ff; --blue-light: #4d7fff; --white: #f5f5f5; --muted: #888;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 2.5rem; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 0.08em; color: var(--white); }
+    .logo span { color: var(--blue); }
+    nav ul { display: flex; list-style: none; gap: 2rem; }
+    nav ul a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+    nav ul a:hover { color: var(--white); }
+    .nav-cta { background: var(--blue); color: white; border: none; padding: 0.55rem 1.2rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 2.5rem 4rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 700px; height: 700px; background: radial-gradient(circle, rgba(37,99,255,0.12) 0%, transparent 70%); pointer-events: none; }
+    .hero-tag { font-family: var(--font-mono); font-size: 0.8rem; color: var(--blue); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(5rem, 12vw, 10rem); line-height: 0.92; letter-spacing: 0.02em; color: var(--white); margin-bottom: 1.5rem; }
+    .hero h1 .accent { color: var(--blue); }
+    .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 420px; margin-bottom: 2.5rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+    .btn-primary { background: var(--blue); color: white; border: none; padding: 0.9rem 1.8rem; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: var(--blue-light); transform: translateY(-1px); }
+    .btn-outline { display: inline-block; color: var(--white); border: 1px solid var(--border); padding: 0.9rem 1.8rem; border-radius: 8px; font-size: 0.95rem; font-weight: 500; text-decoration: none; transition: border-color 0.2s; }
+    .btn-outline:hover { border-color: var(--blue); }
+    .hero-stats { display: flex; gap: 3rem; }
+    .hero-stats div { display: flex; flex-direction: column; }
+    .hero-stats span { font-family: var(--font-display); font-size: 2.2rem; color: var(--white); letter-spacing: 0.04em; }
+    .hero-stats small { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--font-mono); }
+    section { padding: 6rem 2.5rem; }
+    .section-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--blue); letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+    section h2 { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: 0.04em; margin-bottom: 3rem; color: var(--white); }
+    .services { background: var(--dark); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; position: relative; transition: border-color 0.2s, transform 0.2s; }
+    .card:hover { border-color: var(--blue); transform: translateY(-3px); }
+    .card.featured { border-color: var(--blue); background: linear-gradient(135deg, #1a1a2e 0%, var(--panel) 100%); }
+    .card-badge { position: absolute; top: -12px; left: 1.5rem; background: var(--blue); color: white; font-size: 0.72rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 20px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .card-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.6rem; color: var(--white); }
+    .card p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; margin-bottom: 1.2rem; }
+    .card-price { font-family: var(--font-mono); font-size: 1.1rem; color: var(--blue-light); font-weight: 500; }
+    .pricing { background: var(--black); }
+    table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    thead { background: var(--panel); }
+    thead tr th { padding: 1rem 1.5rem; text-align: left; font-family: var(--font-mono); font-size: 0.8rem; color: var(--blue); letter-spacing: 0.08em; text-transform: uppercase; }
+    tbody tr { border-top: 1px solid var(--border); }
+    tbody tr:hover { background: var(--panel); }
+    tbody tr td { padding: 1rem 1.5rem; font-size: 0.92rem; color: var(--white); }
+    tbody tr td:first-child { font-weight: 500; }
+    tbody tr td:not(:first-child) { font-family: var(--font-mono); color: var(--blue-light); }
+    .contact { background: var(--dark); }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+    .contact-item { display: flex; align-items: center; gap: 1rem; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem 1.5rem; font-size: 0.9rem; color: var(--muted); }
+    .contact-item span { color: var(--white); }
+    footer { background: var(--black); border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; }
+    footer p { font-size: 0.82rem; color: var(--muted); }
+    .chat-bubble { position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; background: var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; z-index: 200; box-shadow: 0 4px 24px rgba(37,99,255,0.5); transition: transform 0.2s; }
+    .chat-bubble:hover { transform: scale(1.08); }
+    .chat-window { position: fixed; bottom: 5.5rem; right: 2rem; width: 370px; max-height: 560px; background: var(--dark); border: 1px solid var(--border); border-radius: 16px; display: none; flex-direction: column; z-index: 200; box-shadow: 0 20px 60px rgba(0,0,0,0.6); overflow: hidden; }
+    .chat-window.open { display: flex; }
+    .chat-header { background: var(--panel); border-bottom: 1px solid var(--border); padding: 1rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+    .chat-header-info { display: flex; align-items: center; gap: 0.75rem; }
+    .chat-avatar { width: 38px; height: 38px; background: var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .chat-name { font-weight: 600; font-size: 0.92rem; }
+    .chat-status { font-size: 0.74rem; color: #4ade80; font-family: var(--font-mono); }
+    .chat-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 0.25rem; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; scroll-behavior: smooth; }
+    .msg { display: flex; }
+    .msg.bot { justify-content: flex-start; }
+    .msg.user { justify-content: flex-end; }
+    .msg-bubble { max-width: 82%; padding: 0.7rem 1rem; border-radius: 12px; font-size: 0.88rem; line-height: 1.5; }
+    .msg.bot .msg-bubble { background: var(--panel); border: 1px solid var(--border); color: var(--white); border-bottom-left-radius: 4px; }
+    .msg.user .msg-bubble { background: var(--blue); color: white; border-bottom-right-radius: 4px; }
+    .typing-indicator .msg-bubble { display: flex; gap: 5px; align-items: center; padding: 0.85rem 1rem; }
+    .typing-indicator .dot { width: 7px; height: 7px; background: var(--muted); border-radius: 50%; animation: bounce 1.2s infinite; }
+    .typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
+    .chat-suggestions { padding: 0.5rem 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; border-top: 1px solid var(--border); }
+    .chat-suggestions button { background: var(--panel); border: 1px solid var(--border); color: var(--white); padding: 0.35rem 0.85rem; border-radius: 20px; font-size: 0.78rem; cursor: pointer; }
+    .chat-suggestions button:hover { border-color: var(--blue); }
+    .chat-input-area { display: flex; gap: 0.5rem; padding: 0.85rem 1rem; border-top: 1px solid var(--border); background: var(--panel); }
+    .chat-input-area input { flex: 1; background: var(--dark); border: 1px solid var(--border); color: var(--white); padding: 0.6rem 0.9rem; border-radius: 8px; font-size: 0.88rem; font-family: var(--font-body); outline: none; transition: border-color 0.2s; }
+    .chat-input-area input:focus { border-color: var(--blue); }
+    .chat-input-area input::placeholder { color: var(--muted); }
+    .chat-input-area button { background: var(--blue); color: white; border: none; width: 38px; height: 38px; border-radius: 8px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .chat-input-area button:disabled { background: var(--border); cursor: not-allowed; }
+    @media (max-width: 640px) {
+      nav ul { display: none; }
+      .hero h1 { font-size: 4.5rem; }
+      .hero-stats { gap: 1.5rem; }
+      .chat-window { width: calc(100vw - 2rem); right: 1rem; }
+      .chat-bubble { right: 1rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">SPARKLE<span>WASH</span></div>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-cta" onclick="openChat()">Ask AI Assistant</button>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-tag">Professional Car Care</div>
+    <h1>Your Car<br/><span class="accent">Deserves</span><br/>Better.</h1>
+    <p class="hero-sub">Hand-crafted cleaning. Show-room results. Book in 60 seconds.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openChat()">💬 Chat with AI Assistant</button>
+      <a href="#services" class="btn-outline">View Services</a>
+    </div>
+    <div class="hero-stats">
+      <div><span>2,400+</span><small>Cars Cleaned</small></div>
+      <div><span>4.9★</span><small>Average Rating</small></div>
+      <div><span>24hr</span><small>Turnaround</small></div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="section-label">// WHAT WE DO</div>
+    <h2>Our Services</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🚿</div>
+        <h3>Express Wash</h3>
+        <p>Quick exterior wash, rinse, and dry. Perfect for regular maintenance.</p>
+        <div class="card-price">From $25</div>
+      </div>
+      <div class="card featured">
+        <div class="card-badge">Most Popular</div>
+        <div class="card-icon">✨</div>
+        <h3>Full Detail</h3>
+        <p>Interior vacuum, exterior wash, tire shine, window clean & wax coat.</p>
+        <div class="card-price">From $89</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">💎</div>
+        <h3>Premium Package</h3>
+        <p>Full detail + clay bar treatment, ceramic coating & leather conditioning.</p>
+        <div class="card-price">From $199</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🪑</div>
+        <h3>Interior Only</h3>
+        <p>Deep vacuum, upholstery shampoo, dashboard wipe & odor treatment.</p>
+        <div class="card-price">From $65</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="section-label">// PRICING</div>
+    <h2>Simple Pricing</h2>
+    <table>
+      <thead>
+        <tr><th>Service</th><th>Sedan</th><th>SUV/Truck</th><th>Van</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Express Wash</td><td>$25</td><td>$35</td><td>$45</td></tr>
+        <tr><td>Full Detail</td><td>$89</td><td>$109</td><td>$129</td></tr>
+        <tr><td>Interior Only</td><td>$65</td><td>$80</td><td>$95</td></tr>
+        <tr><td>Premium Package</td><td>$199</td><td>$239</td><td>$279</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="section-label">// FIND US</div>
+    <h2>Get In Touch</h2>
+    <div class="contact-grid">
+      <div class="contact-item">📍 <span>123 Clean Street, Auto City, CA 90210</span></div>
+      <div class="contact-item">📞 <span>(555) 123-4567</span></div>
+      <div class="contact-item">📧 <span>hello@sparklewash.com</span></div>
+      <div class="contact-item">🕐 <span>Mon–Sat: 8am – 6pm | Sun: 9am – 4pm</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo">SPARKLE<span>WASH</span></div>
+    <p>© 2025 SparkleWash. All rights reserved.</p>
+  </footer>
+
+  <div class="chat-bubble" onclick="openChat()" id="chatBubble">💬</div>
+
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">🤖</div>
+        <div>
+          <div class="chat-name">SparkleWash AI</div>
+          <div class="chat-status">● Online</div>
+        </div>
+      </div>
+      <button class="chat-close" onclick="closeChat()">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot">
+        <div class="msg-bubble">Hi! 👋 I'm your SparkleWash assistant. I can help you with our services, pricing, booking, and more. What can I help you with today?</div>
+      </div>
+    </div>
+    <div class="chat-suggestions" id="suggestions">
+      <button onclick="sendSuggestion('What services do you offer?')">Services</button>
+      <button onclick="sendSuggestion('How much does a full detail cost?')">Pricing</button>
+      <button onclick="sendSuggestion('How do I book an appointment?')">Booking</button>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Type your message..." onkeydown="handleKey(event)" />
+      <button onclick="sendMessage()" id="sendBtn">➤</button>
+    </div>
+  </div>
+
+  <script>
+    const GROQ_API_KEY = "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";
+
+    const SYSTEM_PROMPT = `You are the friendly AI assistant for SparkleWash, a professional car cleaning service.
+
+Our services and pricing:
+- Express Wash: $25 (Sedan), $35 (SUV/Truck), $45 (Van)
+- Full Detail: $89 (Sedan), $109 (SUV/Truck), $129 (Van)
+- Interior Only: $65 (Sedan), $80 (SUV/Truck), $95 (Van)
+- Premium Package: $199 (Sedan), $239 (SUV/Truck), $279 (Van)
+
+Business info:
+- Address: 123 Clean Street, Auto City, CA 90210
+- Phone: (555) 123-4567
+- Email: hello@sparklewash.com
+- Hours: Monday–Saturday 8am–6pm, Sunday 9am–4pm
+
+Be friendly, helpful, and concise (2-4 sentences). Help customers find the right service.`;
+
+    let messages = [];
+    let isLoading = false;
+
+    function openChat() {
+      document.getElementById("chatWindow").classList.add("open");
+      document.getElementById("chatBubble").style.display = "none";
+      document.getElementById("chatInput").focus();
+    }
+
+    function closeChat() {
+      document.getElementById("chatWindow").classList.remove("open");
+      document.getElementById("chatBubble").style.display = "flex";
+    }
+
+    function handleKey(e) {
+      if (e.key === "Enter" && !isLoading) sendMessage();
+    }
+
+    function sendSuggestion(text) {
+      document.getElementById("chatInput").value = text;
+      document.getElementById("suggestions").style.display = "none";
+      sendMessage();
+    }
+
+    function appendMessage(role, text) {
+      const container = document.getElementById("chatMessages");
+      const div = document.createElement("div");
+      div.className = "msg " + role;
+      div.innerHTML = '<div class="msg-bubble">' + text.replace(/\n/g, "<br/>") + '</div>';
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function showTyping() {
+      const container = document.getElementById("chatMessages");
+      const div = document.createElement("div");
+      div.className = "msg bot typing-indicator";
+      div.id = "typingIndicator";
+      div.innerHTML = '<div class="msg-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function hideTyping() {
+      const el = document.getElementById("typingIndicator");
+      if (el) el.remove();
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("chatInput");
+      const sendBtn = document.getElementById("sendBtn");
+      const text = input.value.trim();
+      if (!text || isLoading) return;
+
+      input.value = "";
+      isLoading = true;
+      sendBtn.disabled = true;
+      messages.push({ role: "user", content: text });
+      appendMessage("user", text);
+      showTyping();
+
+      try {
+        const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + GROQ_API_KEY
+          },
+          body: JSON.stringify({
+            model: "llama3-8b-8192",
+            max_tokens: 300,
+            temperature: 0.7,
+            messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages]
+          })
+        });
+        const data = await res.json();
+        const reply = data.choices[0].message.content;
+        messages.push({ role: "assistant", content: reply });
+        hideTyping();
+        appendMessage("bot", reply);
+      } catch (err) {
+        hideTyping();
+        appendMessage("bot", "Sorry, I'm having trouble right now. Please call us at (555) 123-4567!");
+      }
+
+      isLoading = false;
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  </script>
+
+</body>
+</html>
